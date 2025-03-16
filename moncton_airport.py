@@ -14,7 +14,7 @@ class moncton_airport:
 	def __init__(self):
 		self.nodes = []
 		self.edges = []
-		get_node = {}
+		self.get_node = {}
 		self.create_nodes()
 
 	def create_nodes(self):

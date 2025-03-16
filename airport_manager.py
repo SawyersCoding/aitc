@@ -38,7 +38,7 @@ class airport_manager:
 			p.ticks += 1
 			# Check if a new destination has been reached
 			if p.ticks == p.edge.weight:
-				p.node = self.airport.nodes[p.edge.to]
+				p.node = self.airport.get_node[p.edge.to]
 				p.ticks = 0
 				p.plane.next_destination()
 
@@ -47,10 +47,10 @@ class airport_manager:
 						p.edge = edge
 						break
 
-	def get_postion(self, plane_id):
+	def get_position(self, plane_id):
 		return self.planes[plane_id].node.name
 
-	def next_postion(self, plane_id):
+	def next_position(self, plane_id):
 		return self.planes[plane_id].edge.to
 
 	def node_clear(self, plane_id, next_position):
@@ -71,6 +71,12 @@ class airport_manager:
 			if p.node == node_from and p.edge.to == node_to:
 				tick_list.append(p.ticks)
 		return tick_list
+
+	def get_ticks(self, plane_id):
+		return self.planes[plane_id].ticks
+	
+	def get_percent_complete(self, plane_id):
+		return 100.0 * self.planes[plane_id].ticks / self.planes[plane_id].edge.weight
 
 	def spawn_plane(self):
 		p = plane("SKY")
