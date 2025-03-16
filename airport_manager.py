@@ -1,4 +1,5 @@
 import moncton_airport as ma
+import plane
 
 class plane_wrapper:
 
