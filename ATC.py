@@ -33,11 +33,17 @@ class weather:
 #So the methods I want to call the airport manager for are the following:
 #next_position(plane_id)
 #node_clear(plane_id, next_position)
+# if destination is 1 or 2 do not have to check go ahead
+#planes that are leaving 1 or 2 
+#list of responses already given, if go ahead to A, then cannot be allowed to 
 
 class ATC:
     def __init__ (self, airport_manager, weather):
         self.airport_manager = airport_manager
         self.weather = weather
+        self.approved = []
+
+
 
         
 
@@ -47,6 +53,7 @@ class ATC:
 
     def go_ahead (self, plane_id):
         next_position = self.airport_manager.next_position(plane_id)
+
 
         if(self.airport_manager.node_clear(plane_id, next_position) == True):
             go_ahead = True
@@ -95,10 +102,22 @@ class ATC:
     def decision_tree(self, plane_id, destination):
         location = self.airport_manager.get_position()
 
+        
+
 
         if(self.weather != 5):
+
             if (self.needs_deIcing(plane_id)):
                 return "ICE"
+            
+            elif(destination == "1"):
+                return destination
+            
+            elif (destination == "2"):
+                return destination
+
+            elif(destination in self.approved):
+                return location
 
             elif ((self.airport_manager.get_position == "SKY") and self.clear_for_landing()):
                 return destination
@@ -107,12 +126,20 @@ class ATC:
                 return destination
     
             elif (self.go_ahead(plane_id)):
+                self.approved.append(destination)
                 return destination
             
             else:
                 return location
         else:
             return location
+        
+    def clear_list(self):
+        self.approved.clear()
+        return
+        
+
+
         
 
 
