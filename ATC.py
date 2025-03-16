@@ -12,7 +12,7 @@ class weather:
         self.weather = weather
         self.icy = icy
 
-        
+
             
 
     
@@ -48,8 +48,6 @@ class ATC:
     def go_ahead (self, plane_id):
         next_position = self.airport_manager.next_position(plane_id)
 
-
-
         if(self.airport_manager.node_clear(plane_id, next_position) == True):
             go_ahead = True
 
@@ -61,7 +59,7 @@ class ATC:
 
     def needs_deIcing (self, plane_id):
         near_a = self.airport_manager.is_plane_between("A", "A'", plane_id)
-        if(near_a) and (weather.icy == True):
+        if(near_a) and (self.weather.icy == True):
             return True
         else:
             return False
@@ -92,21 +90,41 @@ class ATC:
                 plane_in_zone = True
 
         return not plane_in_zone
+    
+
+    def decision_tree(self, plane_id, destination):
+        location = self.airport_manager.get_position()
+
+
+        if(self.weather != 5):
+            if (self.needs_deIcing(plane_id)):
+                return "ICE"
+
+            elif ((self.airport_manager.get_position == "SKY") and self.clear_for_landing()):
+                return destination
+        
+            elif ((destination == "TAKE_OFF") and self.clear_for_takeoff()):
+                return destination
+    
+            elif (self.go_ahead(plane_id)):
+                return destination
+            
+            else:
+                return location
+        else:
+            return location
+        
+
+
+       
 
 
         
-
+        
         
 
 
 
-    
-
-    
 
 
 
-
-
-    
-    
