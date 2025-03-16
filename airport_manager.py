@@ -42,9 +42,12 @@ class airport_manager:
 				p.plane.next_destination()
 
 				for edge in p.node.outgoing_edges:
-					if edge.to == p.plane.next_destination:
+					if edge.to == p.plane.current_destination:
 						p.edge = edge
 						break
+
+	def get_postion(self, plane_id):
+		return self.planes[plane_id].node.name
 
 	def next_postion(self, plane_id):
 		return self.planes[plane_id].edge.to
@@ -69,4 +72,7 @@ class airport_manager:
 		return tick_list
 
 	def spawn_plane(self):
-		print("SPAWN A PLANE")
+		p = plane("SKY")
+		self.planes[self.next_plane_id] = p
+		self.next_plane_id += 1
+		

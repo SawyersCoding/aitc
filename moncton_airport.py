@@ -34,7 +34,7 @@ class moncton_airport:
 		self.nodes.append(n)
 		self.get_node["A'"] = n
 
-		n = node("B", [edge("A", 1), edge("1", 1)])
+		n = node("B", [edge("1", 1)])
 		self.nodes.append(n)
 		self.get_node["B"] = n
 
