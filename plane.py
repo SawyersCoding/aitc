@@ -3,6 +3,7 @@ import random as rand
 class plane:
 
 	def __init__(self, start_pos):
+		self.skip = False
 		self.path = []
 		if(start_pos == "1"):
 			self.path = ["A", "A'", "TAKE_OFF"]

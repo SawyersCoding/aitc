@@ -35,7 +35,8 @@ class airport_manager:
 
 		for p in self.planes.values():
 			# Skip planes that have taken off
-			if(p.node.name == "TAKE_OFF"):
+			if(p.node.name == "TAKE_OFF" or p.plane.skip):
+				p.plane.skip = False
 				continue
 
 

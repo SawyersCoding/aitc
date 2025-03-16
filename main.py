@@ -9,7 +9,7 @@ from moncton_airport import edge
 import random as rand
 
 def print_airport_state(air_manager, i):
-	print("AIRPORT STATE #" + str(i) + ":\n")
+	print("--------------------- AIRPORT STATE #" + str(i) + " ---------------------\n")
 	print("\tPlane id\tPosition\tDestination\tPercent Complete\n")
 	for plane_id in air_manager.planes:
 		# print("\t{0:10}\t{0:10}\t{0:10}\t{0:10}".format(air_manager.planes[plane_id].name, air_manager.get_position(plane_id), air_manager.next_position(plane_id), str(air_manager.get_percent_complete(plane_id)) + "%"))
@@ -40,7 +40,7 @@ p_wrap.append(spawn_plane_wrapper("1", airlines))
 p_wrap.append(spawn_plane_wrapper("1", airlines))
 p_wrap.append(spawn_plane_wrapper("2", airlines))
 p_wrap.append(spawn_plane_wrapper("2", airlines))
-# p_wrap.append(spawn_plane_wrapper("SKY", airlines))
+p_wrap.append(spawn_plane_wrapper("SKY", airlines))
 
 air_manager = airport_manager(moncton, p_wrap, 5)
 atc = ATC(air_manager, w)
@@ -51,6 +51,7 @@ print_airport_state(air_manager, i)
 
 while(True):
 	a = input("Press enter to continue")
+	print()
 	i += 1
 # for i in range(10):
 	# Check decision tree
@@ -62,8 +63,20 @@ while(True):
 		response = atc.decision_tree(plane_id, air_manager.planes[plane_id].plane.current_destination)
 
 		if(response != air_manager.planes[plane_id].plane.current_destination):
-			air_manager.planes[plane_id].plane.path = [air_manager.planes[plane_id].plane.current_destination] + air_manager.planes[plane_id].plane.path
-			air_manager.planes[plane_id].plane.current_destination = response
+			air_manager.planes[plane_id].plane.skip = True
+			# print("Change destination")
+			# print("Old path: " + str(air_manager.planes[plane_id].plane.path))
+			# air_manager.planes[plane_id].plane.path = [air_manager.planes[plane_id].plane.current_destination] + air_manager.planes[plane_id].plane.path
+			# air_manager.planes[plane_id].plane.current_destination = response
+			# print("Response: " + response)
+			# update edge and current node too
+			# air_manager.planes[plane_id].node = air_manager.airport.get_node[response]
+			# for e in air_manager.planes[plane_id].node.outgoing_edges:
+			# 	if e.to == response:
+			# 		air_manager.planes[plane_id].edge = e
+			# 		break
+			# print("New path: " + str(air_manager.planes[plane_id].plane.path))
+		
 
 	air_manager.tick()
 	atc.clear_list()
