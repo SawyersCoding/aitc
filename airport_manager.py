@@ -1,13 +1,15 @@
 import moncton_airport as ma
-import plane
+from plane import plane
+import random as rand
 
 class plane_wrapper:
 
-	def __init__(self, plane, node, edge, ticks):
+	def __init__(self, plane, node, edge, ticks, name):
 		self.plane = plane
 		self.node = node
 		self.edge = edge
 		self.ticks = ticks
+		self.name = name
 
 class airport_manager:
 
@@ -17,6 +19,8 @@ class airport_manager:
 		self.plane_spawn_rate = plane_spawn_rate
 		self.ticks_since_last_spawn = 0
 		self.planes = {} # plane_id, plan_wrapper
+
+		self.airlines = ["AC", "UAC", "WJ", "SW"]
 
 		for p in plane_wrappers:
 			self.planes[self.next_plane_id] = p
@@ -56,7 +60,7 @@ class airport_manager:
 
 	def node_clear(self, plane_id, next_position):
 		for p in self.planes.values():
-			if p.node == next_position and p.ticks == 0:
+			if p.node.name == next_position and p.ticks == 0:
 				return False
 		return True
 
@@ -80,7 +84,15 @@ class airport_manager:
 		return 100.0 * self.planes[plane_id].ticks / self.planes[plane_id].edge.weight
 
 	def spawn_plane(self):
+		# gen plane names for ids
+		p_name = self.airlines[rand.randint(0, len(self.airlines) - 1)] + str(rand.randint(100, 999))
+
 		p = plane("SKY")
-		self.planes[self.next_plane_id] = p
+		dest = None
+		for e in self.airport.get_node["SKY"].outgoing_edges:
+			if e.to == p.current_destination:
+				dest = e
+				break
+		self.planes[self.next_plane_id] = plane_wrapper(p, self.airport.get_node["SKY"], dest, 0, p_name)
 		self.next_plane_id += 1
 		

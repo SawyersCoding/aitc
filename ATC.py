@@ -102,11 +102,7 @@ class ATC:
     def decision_tree(self, plane_id, destination):
         location = self.airport_manager.get_position(plane_id)
 
-        
-
-
         if(self.weather != 5):
-
             if (self.needs_deIcing(plane_id)):
                 return "ICE"
             
