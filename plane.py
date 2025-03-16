@@ -21,5 +21,8 @@ class plane:
 				self.path = ["D", "E", "F", "2", "F", "E", "D", "C", "1", "A", "A'", "TAKE_OFF"]
 
 	def next_destination(self):
+		if len(self.path) == 0:
+			self.current_destination = "TAKE_OFF"
+			return
 		self.current_destination = self.path[0]
 		del self.path[0]

@@ -31,13 +31,14 @@ class airport_manager:
 
 		for p in self.planes.values():
 			# Skip planes that have taken off
-			if(p.node == "TAKE_OFF"):
+			if(p.node.name == "TAKE_OFF"):
 				continue
+
 
 			# update plane positions
 			p.ticks += 1
-			# Check if a new destination has been reached
-			if p.ticks == p.edge.weight:
+			# Check if waiting or a new destination has been reached
+			if p.node.name == p.edge.to or p.ticks == p.edge.weight:
 				p.node = self.airport.get_node[p.edge.to]
 				p.ticks = 0
 				p.plane.next_destination()

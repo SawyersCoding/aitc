@@ -38,7 +38,7 @@ atc = ATC(air_manager, w)
 print_airport_state(air_manager)
 
 # while(True):
-for i in range(1):
+for i in range(20):
 	# Check decision tree
 
 	# Decision tree should track responses already given
@@ -46,7 +46,10 @@ for i in range(1):
 	# Refresh decision tree every tick
 	for plane_id in air_manager.planes:
 		response = atc.decision_tree(plane_id, air_manager.planes[plane_id].plane.current_destination)
-		air_manager.planes[plane_id].plane.current_destination = response
+
+		if(response != air_manager.planes[plane_id].plane.current_destination):
+			air_manager.planes[plane_id].plane.path = [air_manager.planes[plane_id].plane.current_destination] + air_manager.planes[plane_id].plane.path
+			air_manager.planes[plane_id].plane.current_destination = response
 
 	air_manager.tick()
 	atc.clear_list()

@@ -62,6 +62,10 @@ class moncton_airport:
 		self.nodes.append(n)
 		self.get_node["F"] = n
 
+		n = node("TAKE_OFF", [])
+		self.nodes.append(n)
+		self.get_node["TAKE_OFF"] = n
+
 		# self.nodes.append(node("2", [edge("F", 1)]))
 
 		# self.nodes.append(node("A", [edge("ICE", 1), 
